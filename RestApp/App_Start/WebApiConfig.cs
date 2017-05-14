@@ -12,6 +12,10 @@ namespace RestApp
     {
         public static void Register(HttpConfiguration config)
         {
+            var settings = config.Formatters.JsonFormatter.SerializerSettings;
+            settings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
+            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
