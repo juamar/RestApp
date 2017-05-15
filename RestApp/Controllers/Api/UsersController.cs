@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RestApp.Models;
+using RestApp.Dtos;
+using AutoMapper;
 
 namespace RestApp.Controllers.Api
 {
@@ -17,13 +19,13 @@ namespace RestApp.Controllers.Api
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Users
-        public IQueryable<User> GetUsers()
+        public IEnumerable<UserDto> GetUsers()
         {
-            return db.Users;
+            return db.Users.ToList().Select(Mapper.Map<User, UserDto>);
         }
 
         // GET: api/Users/5
-        [ResponseType(typeof(User))]
+        [ResponseType(typeof(UserDto))]
         public IHttpActionResult GetUser(int id)
         {
             User user = db.Users.Find(id);
@@ -32,19 +34,21 @@ namespace RestApp.Controllers.Api
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(Mapper.Map<User, UserDto>(user));
         }
 
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, User user)
+        public IHttpActionResult PutUser(int id, UserDto userDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != user.Id)
+            User user = Mapper.Map<UserDto, User>(userDto);
+
+            if (id != userDto.Id)
             {
                 return BadRequest();
             }
@@ -71,22 +75,25 @@ namespace RestApp.Controllers.Api
         }
 
         // POST: api/Users
-        [ResponseType(typeof(User))]
-        public IHttpActionResult PostUser(User user)
+        [ResponseType(typeof(UserDto))]
+        public IHttpActionResult PostUser(UserDto userDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            User user = Mapper.Map<UserDto, User>(userDto);
             db.Users.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
+            Mapper.Map(user, userDto);
+
+            return CreatedAtRoute("DefaultApi", new { id = userDto.Id }, userDto);
         }
 
         // DELETE: api/Users/5
-        [ResponseType(typeof(User))]
+        [ResponseType(typeof(UserDto))]
         public IHttpActionResult DeleteUser(int id)
         {
             User user = db.Users.Find(id);
@@ -98,7 +105,7 @@ namespace RestApp.Controllers.Api
             db.Users.Remove(user);
             db.SaveChanges();
 
-            return Ok(user);
+            return Ok(Mapper.Map<User, UserDto>(user));
         }
 
         protected override void Dispose(bool disposing)
