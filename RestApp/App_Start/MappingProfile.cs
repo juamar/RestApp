@@ -18,6 +18,8 @@ namespace RestApp.App_Start
             Mapper.CreateMap<UserDto, User>();
             Mapper.CreateMap<Conversation, ConversationDto>();
             Mapper.CreateMap<ConversationDto, Conversation>();
+            Mapper.CreateMap<Message, MessageDto>();
+            Mapper.CreateMap<MessageDto, Message>();
         }
     }
 }

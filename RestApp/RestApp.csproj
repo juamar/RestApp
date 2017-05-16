@@ -213,11 +213,13 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ConversationsController.cs" />
     <Compile Include="Controllers\Api\FriendshipsController.cs" />
+    <Compile Include="Controllers\Api\MessagesController.cs" />
     <Compile Include="Controllers\Api\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Dtos\ConversationDto.cs" />
     <Compile Include="Dtos\FriendshipDto.cs" />
+    <Compile Include="Dtos\MessageDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
