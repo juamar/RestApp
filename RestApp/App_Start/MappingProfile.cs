@@ -20,6 +20,8 @@ namespace RestApp.App_Start
             Mapper.CreateMap<ConversationDto, Conversation>();
             Mapper.CreateMap<Message, MessageDto>();
             Mapper.CreateMap<MessageDto, Message>();
+            Mapper.CreateMap<UserConversation, UserConversationDto>();
+            Mapper.CreateMap<UserConversationDto, UserConversation>();
         }
     }
 }
