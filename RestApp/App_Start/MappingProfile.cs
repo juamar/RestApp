@@ -16,6 +16,8 @@ namespace RestApp.App_Start
             Mapper.CreateMap<FriendshipDto, Friendship>();
             Mapper.CreateMap<User, UserDto>();
             Mapper.CreateMap<UserDto, User>();
+            Mapper.CreateMap<Conversation, ConversationDto>();
+            Mapper.CreateMap<ConversationDto, Conversation>();
         }
     }
 }
