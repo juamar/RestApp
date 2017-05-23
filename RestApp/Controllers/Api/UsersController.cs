@@ -37,6 +37,19 @@ namespace RestApp.Controllers.Api
             return Ok(Mapper.Map<User, UserDto>(user));
         }
 
+        // GET: api/Users?email=juan@text.com
+        [ResponseType(typeof(UserDto))]
+        public IHttpActionResult GetUser(String EMail)
+        {
+            User user = db.Users.Single(u => u.Email.Equals(EMail));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Mapper.Map<User, UserDto>(user));
+        }
+
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUser(int id, UserDto userDto)
