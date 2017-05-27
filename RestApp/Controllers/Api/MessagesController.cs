@@ -24,6 +24,12 @@ namespace RestApp.Controllers.Api
             return db.Messages.ToList().Select(Mapper.Map<Message, MessageDto>);
         }
 
+        // GET: api/UserConversations?userid=3
+        public IEnumerable<MessageDto> GetMessagesByConversation(int conversationId)
+        {
+            return db.Messages.Where(c => c.ConversationId == conversationId).Select(Mapper.Map<Message, MessageDto>);
+        }
+
         // GET: api/Messages/5
         [ResponseType(typeof(MessageDto))]
         public IHttpActionResult GetMessage(int id)

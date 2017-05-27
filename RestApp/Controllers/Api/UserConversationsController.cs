@@ -30,6 +30,12 @@ namespace RestApp.Controllers.Api
             return db.UserConversations.Where(c => c.UserId == userId).Select(Mapper.Map<UserConversation, UserConversationDto>);
         }
 
+        // GET: api/UserConversations?conversationid=3
+        public IEnumerable<UserConversationDto> GetUserConversationsByConversationId(int conversationId)
+        {
+            return db.UserConversations.Where(c => c.ConversationId == conversationId).Select(Mapper.Map<UserConversation, UserConversationDto>);
+        }
+
         // GET: api/UserConversations/5
         [ResponseType(typeof(UserConversationDto))]
         public IHttpActionResult GetUserConversation(int id)
