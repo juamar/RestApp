@@ -11,6 +11,9 @@ using System.Web.Http.Description;
 using RestApp.Models;
 using RestApp.Dtos;
 using AutoMapper;
+using RestApp.App_Start;
+using System.IO;
+using System.Web.Script.Serialization;
 
 namespace RestApp.Controllers.Api
 {
@@ -93,6 +96,14 @@ namespace RestApp.Controllers.Api
             db.Messages.Add(message);
             db.SaveChanges();
 
+            //obtener el otro user de la conversacion
+            User friend = db.Users.Single(u => u.Id == db.UserConversations.FirstOrDefault(uc => uc.ConversationId == message.ConversationId && uc.UserId != message.UserId).UserId);
+            if (friend.Token != null)
+            {
+                SendNotification(message, friend);
+            }
+            
+
             Mapper.Map(message, messageDto);
 
             return CreatedAtRoute("DefaultApi", new { id = messageDto.Id }, messageDto);
@@ -126,6 +137,36 @@ namespace RestApp.Controllers.Api
         private bool MessageExists(int id)
         {
             return db.Messages.Count(e => e.Id == id) > 0;
+        }
+
+        private void SendNotification(Message message, User user)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://gcm-http.googleapis.com/gcm/send");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Headers.Add("Authorization", "key=AIzaSyCNt2yq3fkpi7PskbWDgoAAUaVF3UQb7hI");
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = new JavaScriptSerializer().Serialize(new
+                {
+                    to = user.Token,
+                    notification = new{
+                        title = user.Name + " " + user.LastName,
+                        body = message.MessageText,
+                        icon = "go",
+                        sound = "default"
+                    }
+                });
+    
+                streamWriter.Write(json);
+            }
+
+            /*var httpResponse = (HttpWebResponse)*/httpWebRequest.GetResponse();
+            /*using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }*/
         }
     }
 }
