@@ -16,7 +16,9 @@ namespace RestApp.Dtos
 
         public int UserId { get; set; }
 
-        public string Attachment { get; set; }
+        public string AttachmentName { get; set; }
+
+        public byte[] AttachmentBynary { get; set; }
 
         public int ConversationId { get; set; }
 

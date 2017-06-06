@@ -235,6 +235,10 @@
     <Compile Include="Migrations\201706051832304_addTokenToUser.Designer.cs">
       <DependentUpon>201706051832304_addTokenToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706061138163_supportMessageAttachment.cs" />
+    <Compile Include="Migrations\201706061138163_supportMessageAttachment.Designer.cs">
+      <DependentUpon>201706061138163_supportMessageAttachment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -322,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706051832304_addTokenToUser.resx">
       <DependentUpon>201706051832304_addTokenToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061138163_supportMessageAttachment.resx">
+      <DependentUpon>201706061138163_supportMessageAttachment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
