@@ -37,6 +37,13 @@ namespace RestApp.Controllers.Api
             return Ok(Mapper.Map<Friendship, FriendshipDto>(friendship));
         }
 
+        // GET: api/Friendships?userid=1
+        [ResponseType(typeof(FriendshipDto))]
+        public IEnumerable<FriendshipDto> GetFriendshipDtoForUser(int userId)
+        {
+            return db.Friendships.Where(f => f.UserId == userId || f.UserRequesterId == userId).Select(Mapper.Map<Friendship, FriendshipDto>);
+        }
+
         // PUT: api/Friendships/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutFriendshipDto(int id, FriendshipDto friendshipDto)
